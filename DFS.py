@@ -1,3 +1,4 @@
+from collections import deque
 LEVEL = [
     "######",
     "#..G.#",
@@ -66,4 +67,5 @@ def dfs(max_depth=50):
 
     print("No solution ")
     return None 
+
 dfs()
