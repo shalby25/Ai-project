@@ -1,4 +1,3 @@
-from collections import deque
 LEVEL = [
     "######",
     "#..G.#",
@@ -69,3 +68,4 @@ def dfs(max_depth=50):
     return None 
 
 dfs()
+
