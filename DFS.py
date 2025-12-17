@@ -1,12 +1,10 @@
 LEVEL = [
-    "######",
-    "#..G.#",
-    "#.$..#",
-    "#.@.G#",
-    "#....#",
-    "######"
+    "#######",
+    "#@.$.G#",
+    "#.#.#.#",
+    "#.$.G.#",
+    "#######"
 ]
-
 MOVES = {'U': (-1, 0), 'D': (1, 0), 'L': (0, -1), 'R': (0, 1)}
 ROWS = len(LEVEL)
 COLS = len(LEVEL[0])
@@ -15,16 +13,17 @@ COLS = len(LEVEL[0])
 def find_start():
     player = None
     box = None
-    goals = set()  
+    goals = set()
 
     for r in range(ROWS):
         for c in range(COLS):
             if LEVEL[r][c] == '@':
                 player = (r, c)
             elif LEVEL[r][c] == '$':
-                box = (r, c)
+                if box is None:          # ⬅️ أول صندوق بس
+                    box = (r, c)
             elif LEVEL[r][c] == 'G':
-                goals.add((r, c))   
+                goals.add((r, c))
 
     return player, box, goals
 
