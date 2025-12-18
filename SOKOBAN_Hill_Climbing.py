@@ -1,6 +1,5 @@
 from collections import deque
 
-# --- 1. Game Map ---
 LEVEL_MAP = [
     "#######",
     "#@.$ G#",
@@ -12,7 +11,6 @@ LEVEL_MAP = [
 ROWS = len(LEVEL_MAP)
 COLS = len(LEVEL_MAP[0])
 
-# --- 2. Movements ---
 MOVES = {
     'Up': (-1, 0),
     'Down': (1, 0),
@@ -20,7 +18,6 @@ MOVES = {
     'Right': (0, 1)
 }
 
-# --- 3. Helper Functions ---
 def find_goals(level_map):
     goals = set()
     for r in range(ROWS):
@@ -70,7 +67,6 @@ def get_next_state(current_state, move_dir):
         new_box_positions.add(next_to_box_pos)
         return (box_pos, frozenset(new_box_positions))
 
-# --- 4. Heuristic ---
 def heuristic(box_positions):
     total_dist = 0
     for box in box_positions:
@@ -78,7 +74,6 @@ def heuristic(box_positions):
         total_dist += min_dist
     return total_dist
 
-# --- 5. Hill Climbing Algorithm ---
 def solve_sokoban_hill_climbing(level_map, max_steps=1000):
     start_state = find_start_state(level_map)
     if is_goal(start_state[1]):
@@ -114,10 +109,10 @@ def solve_sokoban_hill_climbing(level_map, max_steps=1000):
     print(f"Nodes explored: {nodes_explored}")
     return None
 
-# --- 6. Main Execution ---
 if __name__ == "__main__":
     print("Starting Hill Climbing search...")
     solution_hc = solve_sokoban_hill_climbing(LEVEL_MAP)
     if solution_hc:
         print("Solution Move Sequence:")
         print(" -> ".join(solution_hc))
+
