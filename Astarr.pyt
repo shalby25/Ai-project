@@ -92,9 +92,9 @@ def solve_sokoban_astar():
         nodes_expanded += 1
 
         if is_goal(current_state[1]):
-            print("✔ Solution found using A*")
-            print("✔ Path length:", len(path))
-            print("✔ Nodes expanded:", nodes_expanded)
+            print("Solution found using A*")
+            print("Path length:", len(path))
+            print("Nodes expanded:", nodes_expanded)
             return path
 
         for action in MOVES:
@@ -111,7 +111,7 @@ def solve_sokoban_astar():
                         (new_f, new_g, next_state, path + [action])
                     )
 
-    print("✘ No solution found")
+    print("No solution found")
     return None
 
 print("\n--- A* Sokoban Solver ---\n")
