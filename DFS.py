@@ -20,7 +20,7 @@ def find_start():
             if LEVEL[r][c] == '@':
                 player = (r, c)
             elif LEVEL[r][c] == '$':
-                if box is None:          # ⬅️ أول صندوق بس
+                if box is None:          
                     box = (r, c)
             elif LEVEL[r][c] == 'G':
                 goals.add((r, c))
@@ -76,3 +76,4 @@ def dfs(max_depth=50):
 
 
 dfs()
+
