@@ -86,8 +86,9 @@ def solve_sokoban_ucs(level_map):
         nodes_explored += 1
 
         if is_goal(current_state[1]):
-            print(f"\nGoal reached! Total moves: {len(path)}, Nodes Explored: {nodes_explored}")
-            print("Solution Move Sequence:")
+            print(f"\nSolution found (Shortest path: {len(path)} moves)")
+            print(f"Nodes Explored: {nodes_explored}")
+            print("\nSolution Move Sequence:")
             print(" -> ".join(path))
             return path
 
