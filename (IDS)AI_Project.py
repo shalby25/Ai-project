@@ -1,6 +1,3 @@
-#--Sokoban game code using IDS Algorithm --#
-
-#--Game setup--#
 LEVEL_MAP = [
     "#######",
     "#@.$.G#",
@@ -19,8 +16,6 @@ ACTIONS = {
     "Right": (0, 1)
 }
 
-
-#--Extraction(player & boxes)--#
 def extract_initial_state():
     player = None
     boxes = set()
@@ -35,7 +30,6 @@ def extract_initial_state():
 
     return (player, frozenset(boxes))
 
-#--Extraction(goal postions)--#
 def extract_goal_positions():
     goals = set()
     for r in range(ROWS):
@@ -48,16 +42,13 @@ def extract_goal_positions():
 GOALS = extract_goal_positions()
 
 
-#--Wall detection--#
 def is_wall(cell):
     r, c = cell                            
     return LEVEL_MAP[r][c] == "#"
 
-#--making sure we`re right or not--#
 def goal_test(boxes):
     return boxes == GOALS
 
-#--moving actions--#
 def apply_action(state, action):
     (pr, pc), boxes = state
     dr, dc = ACTIONS[action]
@@ -70,9 +61,9 @@ def apply_action(state, action):
     if next_player not in boxes:
         return (next_player, boxes)
 
-    box_target = (next_player[0] + dr, next_player[1] + dc)     #next_player[0] = x coordinate , next_player[1] = y coordinate
+    box_target = (next_player[0] + dr, next_player[1] + dc)     
 
-    if is_wall(box_target) or box_target in boxes:              #"box_target in boxes" (cannot move 2 boxes at the same time)
+    if is_wall(box_target) or box_target in boxes:              
         return None
 
     new_boxes = set(boxes)
@@ -81,26 +72,23 @@ def apply_action(state, action):
 
     return (next_player, frozenset(new_boxes))
 
-
-#--Depth-Limited DFS--#
-
 def limited_dfs(state, depth, path, visited, counter):
 
     counter[0] += 1
 
-    if goal_test(state[1]):       #"state[1]=boxes"
+    if goal_test(state[1]):       
         return path
 
     if depth == 0:                          
-        return None               #if we reached to deepest point and still no solution
+        return None              
 
-    for action in ACTIONS:                                            #apply thoose steps to every action(up,...,down) 
+    for action in ACTIONS:                                            
         next_state = apply_action(state, action)
 
-        if next_state and next_state not in visited:                 #to avoid loops 
+        if next_state and next_state not in visited:                
             visited.add(next_state)
 
-            result = limited_dfs(                                     #the recursive call
+            result = limited_dfs(                                    
                 next_state,
                 depth - 1,
                 path + [action],
@@ -108,13 +96,11 @@ def limited_dfs(state, depth, path, visited, counter):
                 counter
             )
 
-            if result is not None:                                 #if we found a solution
+            if result is not None:                                 
                 return result
 
-    return None                                                   #if we did not
+    return None                                                 
 
-
-#--IDS Algorithm--#
 def iterative_deepening_search(max_depth=50):
 
     start_state = extract_initial_state()
@@ -123,8 +109,8 @@ def iterative_deepening_search(max_depth=50):
     for limit in range(max_depth + 1):
         print(f"Searching with depth limit = {limit}")
 
-        visited = {start_state}                         #for every new limit , new visited from start_state
-        expanded = [0]                                  #same here
+        visited = {start_state}                      
+        expanded = [0]
 
         solution = limited_dfs(
             start_state,
@@ -137,19 +123,18 @@ def iterative_deepening_search(max_depth=50):
         total_expanded += expanded[0]
 
         if solution is not None:
-            print("✔ Solution found")
-            print(f"✔ Path length: {len(solution)}")
-            print(f"✔ Nodes expanded: {total_expanded}")
+            print("Solution found")
+            print(f"Path length: {len(solution)}")
+            print(f"Nodes expanded: {total_expanded}")
             return solution
 
-    print("✘ No solution within depth limit")
+    print("No solution within depth limit")
     return None
 
-
-#--Entry--#
 print("\n--- IDS Sokoban Solver ---\n")
 solution_path = iterative_deepening_search()
 
 if solution_path:
     print("\nMovement Sequence:")
     print(" -> ".join(solution_path))
+
