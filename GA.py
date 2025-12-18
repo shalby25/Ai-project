@@ -26,8 +26,7 @@ MOVE_NAMES = {
     'R': 'Right'
 }
 
-# CONVERT MAP
-initial_map = []
+initial_map = [] # CONVERT MAP
 GOALS = []
 
 for r in range(ROWS):
@@ -48,7 +47,6 @@ for r in range(ROWS):
             row.append(' ')
     initial_map.append(row)
 
-# FUNCTIONS
 def print_grid(grid):
     for row in grid:
         print("".join(row))
@@ -63,13 +61,11 @@ def find_positions(grid, symbol):
 def distance_on_grid(a, b):
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
-# MOVE
 def apply_move(grid, move):
     grid = copy.deepcopy(grid)
-
     px, py = find_positions(grid, PLAYER)[0]
-
     dx, dy = 0, 0
+    
     if move == 'U': dx = -1
     if move == 'D': dx = 1
     if move == 'L': dy = -1
@@ -110,12 +106,11 @@ def fitness(original_grid, chromosome):
         if new_grid != grid:
             steps_used += 1
         grid = new_grid
-
+        
         if is_win(grid):
             break
 
     boxes = find_positions(grid, BOX)
-
     boxes_on_goals = sum(1 for box in boxes if box in GOALS)
 
     distance_score = 0
@@ -126,15 +121,13 @@ def fitness(original_grid, chromosome):
     fitness_value = (
         boxes_on_goals * 100 - distance_score * 5 - steps_used
     )
-
     return fitness_value
 
-# GA
 def genetic_algorithm():
-    POP_SIZE = 80 # تنوع الحلول في كل جيل
-    MIN_CHROM_LEN = 10 # اقل عدد حركات
-    MAX_CHROM_LEN = 50 # اكبر عدد حركات
-    GENERATIONS = 300 # 300 جيل هيتعمل ويشوف الاحسن
+    POP_SIZE = 80
+    MIN_CHROM_LEN = 10
+    MAX_CHROM_LEN = 50
+    GENERATIONS = 300
 
     population = [
         [random.choice(MOVES) for _ in range(random.randint(MIN_CHROM_LEN, MAX_CHROM_LEN))]
@@ -174,20 +167,16 @@ def genetic_algorithm():
                 idx = random.randint(0, len(child) - 1)
                 child[idx] = random.choice(MOVES)
 
-            # Add or Remove move in child's length
             if random.random() < 0.2:
                 if random.random() < 0.5 and len(child) > MIN_CHROM_LEN:
-                    child.pop()  #ADD
+                    child.pop()
                 elif len(child) < MAX_CHROM_LEN:
-                    child.append(random.choice(MOVES))  #REMOVE
+                    child.append(random.choice(MOVES))
 
             new_population.append(child)
-
         population = new_population
-
     return best_solution, best_fitness
 
-# OUTPUT
 print("... Starting Genetic Algorithm search ...")
 
 solution, best_fitness = genetic_algorithm()
