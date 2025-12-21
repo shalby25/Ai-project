@@ -1,5 +1,3 @@
-from collections import deque
-
 LEVEL_MAP = [
     "#######",
     "#@.$ G#",
@@ -115,4 +113,5 @@ if __name__ == "__main__":
     if solution_hc:
         print("Solution Move Sequence:")
         print(" -> ".join(solution_hc))
+
 
