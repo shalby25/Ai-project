@@ -130,3 +130,4 @@ if solution:
     print("\nSolution Move Sequence:")
 
     print(" -> ".join(solution))
+
